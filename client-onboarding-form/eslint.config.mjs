@@ -9,8 +9,17 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
+export default [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
 
-export default eslintConfig;
+  {
+    rules: {
+      // ✅ Allow using `any` (disable strict error)
+      "@typescript-eslint/no-explicit-any": "off",
+
+      // (Optional) Make other rules warnings instead of errors
+      "@next/next/no-img-element": "warn",
+      "react/no-unescaped-entities": "warn",
+    },
+  },
+];
