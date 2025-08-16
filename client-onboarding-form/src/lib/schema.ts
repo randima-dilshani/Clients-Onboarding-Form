@@ -21,8 +21,9 @@ export const formSchema = z.object({
   budgetUsd: z
     .union([
       z
-        .number({ invalid_type_error: "Budget must be a number" })
-        .positive({ message: "Budget must be greater than 0" }),
+        .number()
+        .positive({ message: "Budget must be greater than 0" })
+        .refine((val) => !isNaN(val), { message: "Budget must be a valid number" }),
       z.nan().transform(() => undefined), // allow empty field
     ])
     .optional(),

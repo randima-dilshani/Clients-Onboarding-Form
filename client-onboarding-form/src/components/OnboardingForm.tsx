@@ -170,12 +170,13 @@ export default function Form() {
         {/* Start Date */}
         <div>
           <label className="block mb-1 font-medium">Project Start Date</label>
-          <input
-            type="date"
-            {...register("projectStartDate")}
-            min={new Date().toISOString().split("T")[0]}
-            className="w-full border border-gray-700 px-3 py-2 rounded-lg bg-gray-800 text-gray-100 focus:ring-2 focus:ring-indigo-500 outline-none"
-          />
+         <input
+  type="date"
+  {...register("projectStartDate")}
+  min={new Date().toISOString().split("T")[0]}
+  className="w-full border border-gray-700 px-3 py-2 rounded-lg bg-gray-800 text-gray-100 focus:ring-2 focus:ring-indigo-500 outline-none"
+/>
+
           {errors.projectStartDate && (
             <p className="text-red-400 text-sm mt-1">
               {errors.projectStartDate.message}

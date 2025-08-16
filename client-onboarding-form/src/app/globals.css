@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Make calendar icon white */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* makes the dark icon white */
+  cursor: pointer;
+}
+
+/* Ensure popup calendar uses white background */
+input[type="date"] {
+  background-color: #1f2937; /* matches bg-gray-800 */
+  color: #f3f4f6; /* text-gray-100 */
+}
+
