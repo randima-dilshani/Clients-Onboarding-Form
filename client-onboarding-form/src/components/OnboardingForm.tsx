@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function Form() {
   const [serverError, setServerError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -39,8 +40,12 @@ export default function Form() {
       }).toString();
 
       router.push(`/success?${query}`);
-    } catch (err: any) {
-      setServerError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setServerError(err.message);
+      } else {
+        setServerError("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
@@ -52,7 +57,7 @@ export default function Form() {
       className="mx-auto max-w-xl p-8 rounded-2xl shadow-xl bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100"
     >
       <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
-        Client Onboarding
+        Client Onboarding Form
       </h1>
       <p className="text-sm text-gray-400 mb-6">
         Fill out the form below. We will get back to you shortly!
