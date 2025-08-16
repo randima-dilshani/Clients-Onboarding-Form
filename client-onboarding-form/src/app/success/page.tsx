@@ -66,7 +66,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={<p className="text-center text-gray-400">Loading...</p>}>
+    <Suspense fallback={<div className="text-center text-gray-400 p-6">Loading...</div>}>
       <SuccessContent />
     </Suspense>
   );
