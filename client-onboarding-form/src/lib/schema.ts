@@ -1,23 +1,38 @@
 import { z } from "zod";
 
-const nameRegex = /^[A-Za-z\s'\-]{2,80}$/;
-
 export const formSchema = z.object({
-  fullName: z.string()
-    .min(2, "Full name must be at least 2 characters")
-    .max(80, "Full name must be at most 80 characters")
-    .regex(nameRegex, "Only letters, spaces, ' and - allowed"),
-  email: z.string().email("Invalid email"),
-  companyName: z.string().min(2).max(100),
-  services: z.array(z.enum(["UI/UX", "Branding", "Web Dev", "Mobile App"]))
-    .min(1, "Select at least one service"),
-  budgetUsd: z.number().int().min(100).max(1_000_000).optional(),
-  projectStartDate: z.string().refine(
-    (date) => new Date(date) >= new Date(new Date().toDateString()),
-    "Start date must be today or later"
-  ),
+  fullName: z
+    .string()
+    .min(2, { message: "Please enter your full name (at least 2 characters)" })
+    .max(80, { message: "Full name must be less than 80 characters" }),
+
+  email: z
+    .string()
+    .email({ message: "Please enter a valid email address" }),
+
+  companyName: z
+    .string()
+    .min(2, { message: "Company name must be at least 2 characters" }),
+
+  services: z
+    .array(z.string())
+    .min(1, { message: "Select at least one service" }),
+
+  budgetUsd: z
+    .union([
+      z
+        .number({ invalid_type_error: "Budget must be a number" })
+        .positive({ message: "Budget must be greater than 0" }),
+      z.nan().transform(() => undefined), // allow empty field
+    ])
+    .optional(),
+
+  projectStartDate: z
+    .string()
+    .min(1, { message: "Please select a project start date" }),
+
   acceptTerms: z.literal(true, {
-    errorMap: () => ({ message: "You must accept terms" }),
+    errorMap: () => ({ message: "You must accept the terms and conditions" }),
   }),
 });
 
