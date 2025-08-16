@@ -1,9 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
 
   const fullName = searchParams.get("fullName");
@@ -31,7 +32,8 @@ export default function SuccessPage() {
         </motion.h1>
 
         <p className="text-center text-gray-400 mb-6">
-          Thank you <span className="font-semibold text-gray-200">{fullName}</span>, we’ll be in touch soon!
+          Thank you{" "}
+          <span className="font-semibold text-gray-200">{fullName}</span>, we’ll be in touch soon!
         </p>
 
         {/* Details Card */}
@@ -55,9 +57,17 @@ export default function SuccessPage() {
           whileTap={{ scale: 0.95 }}
           className="mt-8 inline-block w-full text-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-white font-semibold shadow-lg hover:from-indigo-500 hover:to-purple-500 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition-all duration-500"
         >
-           Go Back Home
+          Go Back Home
         </motion.a>
       </div>
     </motion.div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<p className="text-center text-gray-400">Loading...</p>}>
+      <SuccessContent />
+    </Suspense>
   );
 }
